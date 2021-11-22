@@ -27,7 +27,6 @@
 - [Installation and Config](#Installation_and_Config)
 - [Test](#test)
 - [Circuit](#circuit)
-- [Smartphone App](#app)
 - [Built Using](#built_using)
 - [Authors](#authors)
 
@@ -83,45 +82,60 @@ A step by step series that covers how to get the Firmware running.
 
   - ```sudo apt-get update```
   - ```sudo apt-get upgrade```
+  - ```cd ~/Desktop/Firmware/```
+  - ```sudo chmod a+rx starter.sh```
   - ```sudo apt install python3-pip```
+  - ```sudo pip3 install --upgrade setuptools```
+  - ```pip3 install paho-mqtt```
+  - ```pip3 install smbus-cffi==0.5.1```
+  - ```cd ~```
+  - ```sudo pip3 install --upgrade adafruit-python-shell```
+  - ```wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py```
+  - ```sudo python3 raspi-blinka.py```
+  - ```sudo pip3 install adafruit-circuitpython-bmp3xx```
+  - ```sudo pip3 install adafruit-circuitpython-bme680```
+  - ```pip install pynmea2```
+  - ```sudo cp /boot/cmdline.txt /boot/cmdline_backup.txt```
+  - ```sudo nano /boot/cmdline.txt```
+  - Delete the file content and put the below content in it:
+  - ```dwc_otg.lpm_enable=0 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles```
+  - Press CTRL+O and then CTRL+X to save and exit.
+  - Again on terminal execute the following commands
+  - ```sudo reboot```
+  - ```sudosystemctl stop serial-getty@ttyAMA0.service```
+  - ```sudosystemctl disable serial-getty@ttyAMA0.service```
+  - ```sudosystemctl stop serial-getty@ttyS0.service```
+  - ```sudosystemctl disable serial-getty@ttyS0.service```
+
+
  
 
 
 ## ⛏️ Testing <a name = "test"></a>
 
-1.  The Firmware can be tested on Raspberry Pi 3B, 3B+ or 4B with the following modifications
-  1.  Connect the sensor as shown in the Circuit Diagram section below.
+1.  The Firmware can be tested on Raspberry Pi
+1.  Connect the sensors as shown in the Schematics section below.
+2.  In the terminal execute the following commands to run the code
+    1.  ```cd ~/Desktop/Firmware/```
+    2.  ```./starter.sh```
 
 ## 🔌 Circuit Diagram <a name = "circuit"></a>
 
 
-* RPi 3,4 GPIOs Pinout
+### Raspberry Pi Schematics
 
-![GPIOsRPi](Circuit/rpi34.jpg)
+![GPIOsRPi](Circuit/rpi.png)
 
-### Circuit
+### ESP32 Pi Schematics
 
-```http
-Pins connections
-```
-
-| RTC DS3231 | Raspberry Pi |
-| :--- | :--- |
-| `SCL` | `GPIO2` | 
-| `SDA` | `GPIO3` | 
-| `VCC` | `5V` | 
-| `GND` | `GND` | 
-
-
-![GPIOsRPiCkt](Circuit/Circuit_bb.png)
+![GPIOsRPi](Circuit/esp32.png)
 
 
 ## Components Used
 
-1.  Any Raspberry Pi (https://www.amazon.com/CanaKit-Raspberry-Micro-Supply-Listed/dp/B01C6FFNY4/ref=sr_1_1?dchild=1&keywords=raspberry+pi+3&qid=1632029848&sr=8-1)
-2.  RTC DS3231(https://www.amazon.de/Echtzeit-Uhr-Modul-RTC-Sensor-Pr%C3%A4zision-AT24C32-Raspberry/dp/B07V68443F/ref=sr_1_5?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=ds3231&qid=1636619193&sr=8-5)
-3.  MCP3008
-4.  Logic Level Converter(https://www.amazon.com/SparkFun-Logic-Level-Converter-Bi-Directional/dp/B01N30ZCW9/ref=sr_1_6?crid=2NOGIA43AG9OS&dchild=1&keywords=logic+level+converter&qid=1632029917&sprefix=logic+level%2Caps%2C463&sr=8-6)
+1.  Raspberry Pi
+2.  ESP32
+3.  Sensors
 
 
 ## ⛏️ Built Using <a name = "built_using"></a>
